@@ -1,0 +1,32 @@
+{
+  "name": "interactive-generator-demo",
+  "version": "1.0.0",
+  "description": "A TypeScript generator demonstration project with a number of interactive programs written as generator functions.",
+  "private": true,
+  "scripts": {
+    "test": "karma start karma.unit.js",
+    "build": "webpack",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.3.1",
+    "jasmine-ts": "^0.3.0",
+    "karma": "^3.1.4",
+    "karma-jasmine": "^2.0.1",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-webpack": "^3.0.5",
+    "nyc": "^13.1.0",
+    "ts-loader": "^5.3.2",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "dependencies": {
+    "@types/jasmine": "^3.3.5"
+  }
+}

@@ -1,0 +1,24 @@
+{
+    "compileOnSave": true,  
+    "include": [
+        "src/**/*"
+    ],
+    "compilerOptions": {
+        "allowJs": true,
+        "sourceMap": true,
+        "outDir": "dist",
+        "target": "es5",
+        "module": "es6",
+        "lib": ["es2015", "dom"],    
+        "strict": true,
+        "strictNullChecks": true,
+        "diagnostics": true,
+        "downlevelIteration": true,
+        "types": ["jasmine"]
+    },    
+    "exclude": [
+        "node_modules",
+        "static",
+        "dist"
+    ]
+}
