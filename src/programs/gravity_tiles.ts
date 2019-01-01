@@ -25,7 +25,8 @@ const numberOfVerticalTiles = 30;
 const width = tileWidth * numberOfHorizontalTiles;
 const height = tileHeight * numberOfVerticalTiles;
 
-const mass = 20;
+const mass = 50;
+const gravityRadius = 8;
 
 class Tile {
     
@@ -41,7 +42,7 @@ class Tile {
         // update velocity
         if (gravityWell !== null) {
             const direction = diffVector(gravityWell, _position);
-            const distance = limit(distanceBetweenVectors(originVector, direction), 5, 200);            
+            const distance = limit(distanceBetweenVectors(originVector, direction), gravityRadius, 100);            
             const force = mass / (distance * distance); 
             this._velocity = addVector(this._velocity, multVector(normalize(direction), force));           
         }
@@ -122,6 +123,17 @@ export default function* gravityTiles() {
             , fillRectangle(boundingRectangle)
             , waitMSForMouseCoords(25)
             , ...flatMap(tiles, tile => tile.render())
+            , ..._gravityPoint !== null
+                ? [
+                    setBrushColor(Colors.black)
+                    , fillRectangle({
+                        left: _gravityPoint.x - gravityRadius,
+                        right: _gravityPoint.x + gravityRadius,
+                        top: _gravityPoint.y - gravityRadius,
+                        bottom: _gravityPoint.y + gravityRadius
+                    }) 
+                ]
+                : []
         ];
     }
 }

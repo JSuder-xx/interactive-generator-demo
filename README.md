@@ -20,4 +20,16 @@ The project consists of
     * Description: Silly little line drawing application with button and canvas clicks.
   * LOGO
     * Pattern: Generator-as-program responding to keyboard input to produce interesting visual output.
-    * Description: This is just me having fun over a weekend with a toy lexer/recursive descent parser/interpreter implementation for a subset LOGO. 
+    * Description: This is just me having fun over a weekend with a toy lexer/recursive descent parser/interpreter implementation for an interesting subset LOGO. 
+
+## Usage
+* Clone repository
+* Install dependencies from the command line
+```
+npm install
+```
+* Start a dev server from the command line
+```
+npm start
+```
+* Navigate to localhost:3000 in your browser.

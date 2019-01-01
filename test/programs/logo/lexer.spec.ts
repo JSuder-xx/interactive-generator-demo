@@ -19,6 +19,17 @@ describe("tokenize", () => {
                 , new Tokens.RightSquareBracket()
             ] 
         }
+        , { 
+            given: "to doSomethingSimple :arg1 forward :arg1 end", 
+            then: [
+                new Tokens.Identifier("to")
+                , new Tokens.Identifier("dosomethingsimple")
+                , new Tokens.Variable("arg1")
+                , new Tokens.Identifier("forward")
+                , new Tokens.Variable("arg1")
+                , new Tokens.Identifier("end")
+            ] 
+        }
     ]);
 
     

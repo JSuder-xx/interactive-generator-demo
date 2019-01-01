@@ -29,11 +29,11 @@ const width = 800;
 const height = 600;
 
 const instructions: string[] = [
-    "A !TOY! implementation of Logo/Turtle graphics. Movement commands { Forward, Backward, Right, Left }. Pen commands { PenUp, PenDown, SetPenColor }. _NOTE_: SetPenColor takes three RGB arguments ex 'SetPenColor [255 128 128]')"
+    "A !TOY! implementation of Logo/Turtle graphics. Movement commands { Forward, Backward, Right, Left }. Pen commands { PenUp, PenDown, SetPenColor }. _NOTE_: SetPenColor takes either a single color number ('SetPenColor 3') OR three RGB arguments ('SetPenColor [255 128 128]')"
     , "Composability { Repeat, To, procedure calling }. Quit by entering 'quit'"
     , "EXAMPLE (define 'square'): to square :size repeat 4 [ forward :size right 90 ] end"
     , "EXAMPLE (define 'spiral'): to spiral :size :repetitions repeat :repetitions [ right (360 / :repetitions) square :size ] end"
-    , "EXAMPLE (execute): repeat 16 [ setpencolor (:repcount % 6) spiral (repcount * 10) (6 + (repcount * 3)) ]"
+    , "EXAMPLE (execute): repeat 15 [ setpencolor (1 + (:repcount % 5)) spiral (repcount * 10) (6 + (repcount * 3)) ]"
 ];
 
 const backgroundBufferName = "background";

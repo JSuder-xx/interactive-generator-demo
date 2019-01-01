@@ -127,7 +127,13 @@ export default function execute({rootElement, program}: {
                         reject(new Error("Expecting mouse click target to be an element."));
                 };
                 _canvas.onmousemove = (ev: MouseEvent) => {
-                    _mousePosition = { x: ev.clientX, y: ev.clientY };
+                    const { target } = ev;
+                    if (target instanceof HTMLElement) {
+                        const clientRectangle = target.getBoundingClientRect();                        
+                        _mousePosition = { x: ev.clientX - clientRectangle.left, y: ev.clientY - clientRectangle.top };
+                    }
+                    else
+                        reject(new Error("Expecting mouse move target to be an element."));                    
                 }
             }
             else
