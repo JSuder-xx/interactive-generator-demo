@@ -21,6 +21,7 @@ import { mouseClick, textInput, mousePosition } from "./input";
 import { colorToString } from "./color";
 import { Vector } from "./vector";
 import { callWithNever } from "../helpers/union";
+import ProgramAsGenerator from "./program_as_generator";
 
 const fontHeightInPixels = 12;
 
@@ -37,11 +38,11 @@ export default function execute({rootElement, program}: {
      *   * yielding any commands to draw on the canvas.
      * * A program may yield a single command to request Keyboard events.
      **/
-    program: IterableIterator<Command>
+    program: ProgramAsGenerator
 }): Promise<void> {           
     return new Promise((resolve, reject) => {
         let _instructionsContainerDiv: HTMLDivElement | null = null;
-        let _textInput: HTMLInputElement | null = null;
+        let _textInputContainer: HTMLDivElement | null = null;
         let _canvas: HTMLCanvasElement | null = null;
         let _canvasContext: CanvasRenderingContext2D | null = null;
         let _mousePosition: Vector | null = null;
@@ -59,10 +60,9 @@ export default function execute({rootElement, program}: {
         }
 
         function done() {
-            if (_textInput instanceof HTMLInputElement) {
-                _textInput.remove();
-                _textInput.onkeydown = null;
-                _textInput = null;
+            if (_textInputContainer instanceof HTMLElement) {
+                _textInputContainer.remove();
+                _textInputContainer = null;
             }
             if (_canvas instanceof HTMLCanvasElement) {
                 _canvas.remove();
@@ -109,6 +109,8 @@ export default function execute({rootElement, program}: {
                 const container = _instructionsContainerDiv;
                 instructions.forEach(instruction => {
                     const paragraph = document.createElement("p");
+                    paragraph.style.marginTop = "4px";
+                    paragraph.style.marginBottom = "8px";
                     paragraph.innerText = instruction;
                     container.appendChild(paragraph);
                 });
@@ -140,17 +142,24 @@ export default function execute({rootElement, program}: {
                 reject(new Error("Must initialize canvas before requesting mouse events"));                
         }    
 
-        function requestTextInput() {
-            if (!!_textInput) {
+        function requestTextInput(label: string) {
+            if (!!_textInputContainer) {
                 reject(new Error("Program requested text input twice."));
                 return;
             }
+
+            const textContainerElement = document.createElement("div");
+            
+            const labelElement = document.createElement("label");
+            labelElement.textContent = label
+            labelElement.style.display = "inline-block";
+            textContainerElement.appendChild(labelElement);
+            
             const textInputElement = document.createElement("input");
             textInputElement.style.width = "600px";
-            textInputElement.style.display = "block";
-            rootElement.appendChild(textInputElement);                
-            _textInput = textInputElement;
-
+            textInputElement.style.display = "inline-block";
+            textInputElement.style.marginLeft = "8px";
+            textContainerElement.appendChild(textInputElement);                
             textInputElement.onkeydown = (ev: KeyboardEvent) => {
                 if (ev.keyCode === 13) {
                     const text = textInputElement.value;
@@ -158,13 +167,17 @@ export default function execute({rootElement, program}: {
                     processResult(program.next(textInput(text)));
                 }
             };    
+
+            rootElement.appendChild(textContainerElement);
+
+            _textInputContainer = textContainerElement;
         }    
 
         function executeCommand(command: Command) {
             if (command instanceof InitializeCanvas)
                 initializeCanvas(command);
             else if (command instanceof RequestKeyboardEvents) 
-                requestTextInput();
+                requestTextInput(command.label);
             else if (command instanceof ProvideInstructions)
                 setInstructions(command.instructions);
             else if (command instanceof RequestMouseEvents)

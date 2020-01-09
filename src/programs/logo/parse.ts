@@ -49,8 +49,8 @@ export default function parse(symbolTable: SymbolTable, tokens: Tokens.Token[]):
     }
     return statements;
 
-    function currentToken(): Tokens.Token | null {
-        return tokens[0] || null;
+    function currentToken(): Tokens.Token {
+        return tokens[0] || Tokens.endOfInput;
     }
 
     function advanceToNextToken() { tokens.shift(); }
@@ -156,7 +156,7 @@ export default function parse(symbolTable: SymbolTable, tokens: Tokens.Token[]):
             }
         }
         else
-            throw createParseError(`Expecting an expression but found ${current}`);
+            throw createParseError(`Expecting expression but found ${current + ''}`);
     }
 
     function parseSingleInputCommand(identifier: string, Constructor: {new(exp: Expression): AstNode}) {
@@ -251,7 +251,19 @@ export default function parse(symbolTable: SymbolTable, tokens: Tokens.Token[]):
                 advanceToNextToken();
                 const parameterValues: Expression[] = [];
                 symbolValue.parameters.forEach(parameter => {
-                    parameterValues.push(parseExpression());
+                    try {
+                        parameterValues.push(parseExpression());
+                    }
+                    catch (ex) {
+                        throw createParseError(
+                            `For parameter '${parameter.variableName}' error at call site`
+                            + (
+                                (ex instanceof Error)
+                                ? `: ${ex.message}`
+                                : ``
+                            )
+                        );
+                    }
                 })
                 return new Call(symbolValue, parameterValues);
             }

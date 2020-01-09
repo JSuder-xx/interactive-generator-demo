@@ -12,7 +12,8 @@ import {
     , frameRectangle
     , fillRectangle
     , setBrushColor
-    , fillTextCentered
+    , fillTextCentered,
+    CommmandList
 } from "../io_generator_api/command";
 import { TextInput } from "../io_generator_api/input";
 import { Colors, colorOrThrow } from "../io_generator_api/color";
@@ -29,16 +30,21 @@ const width = 800;
 const height = 600;
 
 const instructions: string[] = [
-    "A !TOY! implementation of Logo/Turtle graphics. Movement commands { Forward, Backward, Right, Left }. Pen commands { PenUp, PenDown, SetPenColor }. _NOTE_: SetPenColor takes either a single color number ('SetPenColor 3') OR three RGB arguments ('SetPenColor [255 128 128]')"
-    , "Composability { Repeat, To, procedure calling }. Quit by entering 'quit'"
-    , "EXAMPLE (define 'square'): to square :size repeat 4 [ forward :size right 90 ] end"
-    , "EXAMPLE (define 'spiral'): to spiral :size :repetitions repeat :repetitions [ right (360 / :repetitions) square :size ] end"
-    , "EXAMPLE (execute): repeat 15 [ setpencolor (1 + (:repcount % 5)) spiral (repcount * 10) (6 + (repcount * 3)) ]"
+    "A !TOY! implementation of Logo/Turtle graphics."
+    , `Quit by entering the text 'quit'
+Movement commands { Forward, Backward, Right, Left }
+Composability { Repeat, To, procedure calling }. 
+Pen commands { PenUp, PenDown, SetPenColor }
+...SetPenColor takes either a single color number ('SetPenColor 3') OR three RGB arguments ('SetPenColor [255 128 128]')`
+    , "The example below EXAMPLE which first defines 'square', then 'spiral' and finally executes a repeat that employs 'spiral':"
+    , `to square :size repeat 4 [ forward :size right 90 ] end
+to spiral :size :repetitions repeat :repetitions [ right (360 / :repetitions) square :size ] end
+repeat 15 [ setpencolor (1 + (:repcount % 5)) spiral (repcount * 10) (6 + (repcount * 3)) ]`
 ];
 
 const backgroundBufferName = "background";
 
-export default function* logo(): IterableIterator<Command> {
+export default function* logo(): Generator<CommmandList, void, TextInput> {
     const turtle = new Turtle({ x: width / 2, y: height / 2});
     const okStatusArea: Rectangle = { left: 4, top: 4, right: 40, bottom: 24 };
     const errorStatusArea: Rectangle = { left: 4, top: 4, right: width - 4, bottom: 24 };
@@ -64,7 +70,7 @@ export default function* logo(): IterableIterator<Command> {
     function createEnvironmentInitialization() {
         return commandList([
             provideInstructions(instructions)
-            , requestKeyboardEvents()
+            , requestKeyboardEvents("Command>>")
             , initializeCanvas({ width, height })
             , setPenColor(Colors.black)
             , frameRectangle({ left: 0, top: 0, right: width, bottom: height })

@@ -1,5 +1,5 @@
 import execute from "./io_generator_api/execute";
-import { Command } from "./io_generator_api/command";
+import ProgramAsGenerator from "./io_generator_api/program_as_generator";
 
 import lineDrawer from "./programs/line_drawer";
 import ambExample from "./programs/amb_example";
@@ -20,7 +20,7 @@ function main() {
     document.body.appendChild(programContainerDiv);
     return;
 
-    function createProgramLink(caption: string, programThunk: () => IterableIterator<Command>) {
+    function createProgramLink(caption: string, programThunk: () => ProgramAsGenerator) {
         const anchor  = document.createElement("a");
         anchor.innerHTML = caption;
         anchor.onclick = () => {
@@ -29,7 +29,7 @@ function main() {
         return anchor;
     }
     
-    function executeProgram(program: IterableIterator<Command>) {
+    function executeProgram(program: ProgramAsGenerator) {
         selectionDiv.style.display = "none";
         execute({ 
             rootElement: programContainerDiv,

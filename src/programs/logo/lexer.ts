@@ -35,6 +35,8 @@ export module Tokens {
 
     export class Modulus { toString() { return `%`; } }
 
+    export class EndOfInput { toString() { return 'End of Input'; } }
+
     export type Token = 
         Identifier
         | Variable
@@ -48,7 +50,10 @@ export module Tokens {
         | Addition
         | Subtraction
         | Modulus
+        | EndOfInput
         ;
+
+    export const endOfInput = new EndOfInput();
 }
 
 const singleCharRegEx = /[()+-\/*\[\]]/;

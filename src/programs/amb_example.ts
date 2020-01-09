@@ -64,7 +64,7 @@ module Logic  {
     }
 }
 
-export default function* ambExample(): IterableIterator<Command> {
+export default function* ambExample() {
     const canvasRectangle = { left: 0, top: 0, right: 640, bottom: 50 };
     let initialized = false;
     for(let result of Logic.multipleDwelling()) {

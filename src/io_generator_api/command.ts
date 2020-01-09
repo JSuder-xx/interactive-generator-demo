@@ -5,8 +5,11 @@ import { Rectangle } from "./rectangle";
 export class RequestMouseEvents { private readonly __kind: "RequestMouseEvents" = "RequestMouseEvents"; }
 export const requestMouseEvents = () => new RequestMouseEvents();
 
-export class RequestKeyboardEvents { private readonly __kind: "RequestKeyboardEvents" = "RequestKeyboardEvents"; }
-export const requestKeyboardEvents = () => new RequestKeyboardEvents();
+export class RequestKeyboardEvents { 
+    private readonly __kind: "RequestKeyboardEvents" = "RequestKeyboardEvents"; 
+    constructor(public readonly label: string) {} 
+}
+export const requestKeyboardEvents = (label: string) => new RequestKeyboardEvents(label);
 
 export class InitializeCanvas { 
     private readonly __kind: "InitializeCanvas" = "InitializeCanvas"; 
