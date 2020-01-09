@@ -15,7 +15,8 @@
         "strictNullChecks": true,
         "diagnostics": true,
         "downlevelIteration": true,
-        "types": ["jasmine"]
+        "types": ["jasmine"],
+        "skipLibCheck": true
     },    
     "exclude": [
         "node_modules",

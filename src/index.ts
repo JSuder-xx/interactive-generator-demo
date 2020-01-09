@@ -10,10 +10,10 @@ main();
 
 function main() {
     const selectionDiv = document.createElement("div");
-    selectionDiv.appendChild(createProgramLink("Amb Example", ambExample));
+    selectionDiv.appendChild(createProgramLink("Logo", logo));
     selectionDiv.appendChild(createProgramLink("Gravity Tiles", gravityTiles));
     selectionDiv.appendChild(createProgramLink("Line Drawer", lineDrawer));
-    selectionDiv.appendChild(createProgramLink("Logo", logo));
+    selectionDiv.appendChild(createProgramLink("Amb Example", ambExample));
     const programContainerDiv = document.createElement("div");
 
     document.body.appendChild(selectionDiv);
