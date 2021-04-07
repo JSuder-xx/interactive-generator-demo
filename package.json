@@ -14,7 +14,7 @@
   "devDependencies": {
     "@types/node": "^13.1.5",
     "jasmine": "^3.3.1",
-    "jasmine-ts": "^0.3.0",
+    "jasmine-ts": "^0.3.2",
     "karma": "^3.1.4",
     "karma-jasmine": "^2.0.1",
     "karma-phantomjs-launcher": "^1.0.4",
@@ -25,7 +25,7 @@
     "typescript": "^3.7.4",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.14",
+    "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
